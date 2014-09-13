@@ -2,24 +2,30 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from .forms import UploadFileForm
+import Image
+import pytesseract
+import os
+from time import sleep
 
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
 
 def handle_file(f):
-    pass
+    f = f.read()
+    print f
+    #i = Image.open(f)
+    # pytesseract.image_to_string(i)
 
 def results(request):
     return render(request,'results.html')
 
 def upload_file(request):
     if request.method == 'POST':
-        print 1
         form = UploadFileForm(request.POST, request.FILES)
-        print 2
         if form.is_valid():
-            print 3
             handle_file(request.FILES['file'])
+            #i = Image.open('record.tif')
+            #pytesseract.image_to_string(i)
             return HttpResponseRedirect('/results')
     else:
         form = UploadFileForm()

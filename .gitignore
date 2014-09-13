@@ -103,3 +103,4 @@ docs/_build/
 # PyBuilder
 target/
 
+*.tif
