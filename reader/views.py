@@ -1,14 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.files import File
-from django.core.files.images import ImageFile
-from django.shortcuts import render_to_response
 from .forms import UploadFileForm
-import Image
-import pytesseract
 import os
-from logic import Test
-from time import sleep
 from ABBYY import process
 from django.conf import settings
 
@@ -27,7 +20,6 @@ def handle_file(filename):
     path = os.path.split(filename)[0]
     process.recognizeFile(filename,path)
 
-
 def results(request):
     return render(request,'results.html')
 
@@ -45,5 +37,21 @@ def upload_file(request):
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
+
+def parse_file(f, tests):
+    testDB = None #I'll deal with this later
+    results = {}
+    string = f.read().split()
+    for test in tests:
+        test_data = testDB['test']
+        for alias in test_data.aliases:
+            try:
+                i = string.index(alias)
+                for x in range(i,string.length()):
+                    try:
+                        value = int(string[x])
+                        break
+                    except ValueError:
+                        pass
 
 # Create your views here.
