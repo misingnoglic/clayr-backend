@@ -1,0 +1,43 @@
+{
+	"name": "LDL",
+	"properties": {
+		"brief-description": "Low Density Lipoprotein",
+		"description": "Low Density Cholesterol",
+		"low": "",
+		"avg": "0-129",
+		"med": "130-159",
+		"high": "160+",
+		"unit": "mg/dL"
+	}
+}
+{
+	"name": "HDL",
+	"properties": {
+		"brief-description": "High Density Lipoprotein",
+		"description": "High Density Lipoprotein"
+		"low": "0-39",
+		"avg": "40-199",
+		"med": "200-239",
+		"high": "240+",
+		"unit": "mg/dL"
+	}
+}
+{
+	"name": "Triglycerides",
+	"properties": {
+		"brief-description": "Fatty Acids",
+		"description": "Fatty Acid content level in blood stream",
+		"low": "",
+		"avg": "0-149",
+		"med": "150-199",
+		"high": "200+",
+		"unit": "mg/dL"
+	}
+}
+{
+	"name": "Glucose",
+	"properties": {
+		"brief-description": "Blood Sugar",
+		"description": ""
+	}
+}
