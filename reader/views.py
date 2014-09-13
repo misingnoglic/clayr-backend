@@ -7,6 +7,7 @@ from .forms import UploadFileForm
 from ABBYY import process
 from reader.testDB import testDatabaseGenerator
 import json
+import traceback
 
 
 # Imaginary function to handle an uploaded file.
@@ -43,27 +44,34 @@ def upload_file(request):
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
 
-def parse_file(f, tests):
+def parse_file(alias_found, tests):
     testDB = testDatabaseGenerator()
     results = {}
-    words = f.read().lower().split()
-    print len(words)
+    words = alias_found.read().lower().split()
     for test in tests:
+        value = None
         test_data = testDB[test.lower()]
         for alias in test_data.aliases:
+            alias_found = False
             try:
+
                 i = words.index(alias.lower())
-                for x in range(i+1,len(words)):
+                for x in range(i+1, i+5):#len(words)):
                     try:
                         value = float(words[x])
+                        alias_found = True
                         break
                     except ValueError:
                         pass
                 else:
-                    value = None
-            except ValueError:
-                value = None
+                    pass
+
+
+            except ValueError, err:
+                pass
+
+            if alias_found: break
         results[test]=value
-    return json.dumps(results) + "\n" + str(words)
+    return json.dumps(results)
 
 
