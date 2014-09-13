@@ -71,7 +71,8 @@ class AbbyyOnlineSdk:
 		getResultUrl = self.ServerUrl + "getResult?" + getResultParams
 		request = urllib2.Request( getResultUrl, None, self.buildAuthInfo() )
 		fileResponse = self.getOpener().open( request ).read()
-		resultFile = open( outputPath, "wb" )
+		print outputPath
+		resultFile = open( outputPath+"/output.txt", "wb" )
 		resultFile.write( fileResponse )
 
 

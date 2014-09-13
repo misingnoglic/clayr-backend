@@ -21,10 +21,11 @@ def save_file(file, path='uploaded/'):
     for chunk in file.chunks():
         fd.write(chunk)
     fd.close()
-    handle_file(filename)
+    handle_file('%s/%s' % (settings.MEDIA_ROOT, str(path) + str(filename)))
 
 def handle_file(filename):
-    pass
+    path = os.path.split(filename)[0]
+    process.recognizeFile(filename,path)
 
 
 def results(request):
@@ -34,7 +35,7 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid() and form.is_multipart():
-            content = save_file(request.FILES['file']) #Assume this function takes the image and gets text from it
+            save_file(request.FILES['file']) #Assume this function takes the image and gets text from it
             #return HttpResponse("THanks!")
             #Create a list of Tests and generate them
             #Call a function to find the values of those tests, if found add the file to the list
