@@ -1,10 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from .forms import UploadFileForm
 import os
-from ABBYY import process
+
+from django.shortcuts import render, HttpResponse
 from django.conf import settings
-from testDB import testDatabaseGenerator
+
+from .forms import UploadFileForm
+from ABBYY import process
+from reader.testDB import testDatabaseGenerator
+import json
+
 
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
@@ -34,7 +37,8 @@ def upload_file(request):
             #Call a function to find the values of those tests, if found add the file to the list
             #return HttpResponseRedirect('/results')
             f = open("media/uploaded/output.txt")
-            return HttpResponse(f, content_type='text/plain')
+
+            return HttpResponse(parse_file(f,['wbc','rbc']), content_type='application/json')
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
@@ -42,15 +46,16 @@ def upload_file(request):
 def parse_file(f, tests):
     testDB = testDatabaseGenerator()
     results = {}
-    string = f.read().split()
+    words = f.read().lower().split()
+    print len(words)
     for test in tests:
-        test_data = testDB['test']
+        test_data = testDB[test.lower()]
         for alias in test_data.aliases:
             try:
-                i = string.index(alias)
-                for x in range(i,string.length()):
+                i = words.index(alias.lower())
+                for x in range(i+1,len(words)):
                     try:
-                        value = int(string[x])
+                        value = float(words[x])
                         break
                     except ValueError:
                         pass
@@ -59,4 +64,6 @@ def parse_file(f, tests):
             except ValueError:
                 value = None
         results[test]=value
+    return json.dumps(results) + "\n" + str(words)
+
 
