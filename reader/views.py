@@ -7,19 +7,23 @@ from .forms import UploadFileForm
 from ABBYY import process
 from reader.testDB import testDatabaseGenerator
 import json
-import traceback
-
+import calendar
+import time
 
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
-def save_file(file, path='uploaded/'):
-    os.mkdir(settings.MEDIA_ROOT+"/"+path)
-    filename = file._get_name()
-    fd = open('%s/%s' % (settings.MEDIA_ROOT, str(path) + str(filename)), 'wb')
+def save_file(file, unique_id, path='uploaded/'):
+    new_path = settings.MEDIA_ROOT+"/"+path
+    if not os.path.exists(new_path):
+        os.mkdir(new_path)
+    new_path = new_path+unique_id+"/"
+    os.mkdir(new_path)
+    filename = 'image'
+    fd = open(str(new_path) + str(filename), 'wb')
     for chunk in file.chunks():
         fd.write(chunk)
     fd.close()
-    handle_file('%s/%s' % (settings.MEDIA_ROOT, str(path) + str(filename)))
+    handle_file(str(new_path) + str(filename))
 
 def handle_file(filename):
     path = os.path.split(filename)[0]
@@ -30,21 +34,20 @@ def results(request):
 
 def upload_file(request):
     if request.method == 'POST':
+        unique_id = str(calendar.timegm(time.gmtime())-10**6)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid() and form.is_multipart():
-            save_file(request.FILES['file']) #Assume this function takes the image and gets text from it
-            #return HttpResponse("THanks!")
-            #Create a list of Tests and generate them
-            #Call a function to find the values of those tests, if found add the file to the list
-            #return HttpResponseRedirect('/results')
-            f = open("media/uploaded/output.txt")
-            loaded_json = parse_file(f,['wbc','rbc'])
+
+            save_file(request.FILES['file'],unique_id)
+
+            f = open("media/uploaded/"+unique_id+"/output.txt")
+            loaded_json = parse_file(f,['wbc','rbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
 
-def parse_file(alias_found, tests):
+def parse_file(alias_found, tests,unique_id):
     testDB = testDatabaseGenerator()
     results = {}
     words = alias_found.read().lower().split()
@@ -56,7 +59,7 @@ def parse_file(alias_found, tests):
             try:
 
                 i = words.index(alias.lower())
-                for x in range(i+1, i+5):#len(words)):
+                for x in range(i+1, i+5):
                     try:
                         value = float(words[x])
                         alias_found = True
@@ -76,6 +79,10 @@ def parse_file(alias_found, tests):
             ranges[t[0]]={'min':t[2][0], 'max':t[2][1], 'hex':t[1]}
         dictionary = {'value':value, 'brief_desc':test_data.brief_desc, 'ranges':ranges, 'unit':test_data.unit}
         results[test]=dictionary
-    return json.dumps(results)
+    results['id']= unique_id
+    json_file = json.dumps(results)
+    with open(settings.MEDIA_ROOT+'/'+'uploaded/'+unique_id+'/'+'json.txt', 'w') as json_storage:
+        json_storage.write(json_file)
+    return json_file
 
 
