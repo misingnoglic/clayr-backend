@@ -12,7 +12,6 @@ from time import sleep
 
 def handle_file(f):
     f = f.read()
-    print f
     #i = Image.open(f)
     # pytesseract.image_to_string(i)
 
