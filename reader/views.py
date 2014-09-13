@@ -40,7 +40,7 @@ def upload_file(request):
     return render(request,'upload.html', {'form': form})
 
 def parse_file(f, tests):
-    testDB = None #I'll deal with this later
+    testDB = testDatabaseGenerator()
     results = {}
     string = f.read().split()
     for test in tests:
@@ -54,5 +54,9 @@ def parse_file(f, tests):
                         break
                     except ValueError:
                         pass
+                else:
+                    value = None
+            except ValueError:
+                value = None
+        results[test]=value
 
-# Create your views here.
