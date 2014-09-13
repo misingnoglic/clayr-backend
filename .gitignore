@@ -85,3 +85,4 @@ target/
 
 *.tif
 secret.py
+media/

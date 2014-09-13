@@ -55,7 +55,7 @@ def recognizeFile( filePath, resultFilePath = "output.txt", language='English', 
 	# at http://ocrsdk.com/documentation/apireference/listFinishedTasks/).
 
 	while task.IsActive() == True :
-		time.sleep( 5 )
+		time.sleep( 2.5 )
 		sys.stdout.write( "." )
 		task = processor.GetTaskStatus( task )
 

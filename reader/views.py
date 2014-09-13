@@ -10,18 +10,22 @@ import os
 from logic import Test
 from time import sleep
 from ABBYY import process
+from django.conf import settings
 
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
+def save_file(file, path='uploaded/'):
+    os.mkdir(settings.MEDIA_ROOT+"/"+path)
+    filename = file._get_name()
+    fd = open('%s/%s' % (settings.MEDIA_ROOT, str(path) + str(filename)), 'wb')
+    for chunk in file.chunks():
+        fd.write(chunk)
+    fd.close()
+    handle_file(filename)
 
-def handle_file(f):
-    i = ImageFile(f)
-    print i.name
-    print os.getcwd()
-    image = Image.open(i)
-    print image
-    s = pytesseract.image_to_string(image)
-    print s
+def handle_file(filename):
+    pass
+
 
 def results(request):
     return render(request,'results.html')
@@ -29,14 +33,13 @@ def results(request):
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            s = handle_file(request.FILES['file']) #Assume this function takes the image and gets text from it
-
+        if form.is_valid() and form.is_multipart():
+            content = save_file(request.FILES['file']) #Assume this function takes the image and gets text from it
+            #return HttpResponse("THanks!")
             #Create a list of Tests and generate them
             #Call a function to find the values of those tests, if found add the file to the list
-
-
             return HttpResponseRedirect('/results')
+            #return HttpResponse(content, content_type='text/plain')
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
