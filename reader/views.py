@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.files import File
+from django.core.files.images import ImageFile
 from django.shortcuts import render_to_response
 from .forms import UploadFileForm
 import Image
@@ -11,9 +13,12 @@ from time import sleep
 #from somewhere import handle_uploaded_file
 
 def handle_file(f):
-    f = f.read()
-    #i = Image.open(f)
-    # pytesseract.image_to_string(i)
+    i = ImageFile(f)
+    print i
+    image = Image.open(i)
+    print image
+    s = pytesseract.image_to_string(image)
+    print s
 
 def results(request):
     return render(request,'results.html')
