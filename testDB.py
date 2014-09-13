@@ -25,13 +25,13 @@ Hemocritdesc = ''
 testDB['Hematocrit'] = Test(['Hematocrit', 'HCT', 'PCV'], 'pct space RBCs take up', Hemocritdesc, [('AVG', AVGCOLOR, (38.8, 50.0))], '%')
 
 MCVdesc = ''
-testDB['MCV'] = Test(['MCV'], '')
+testDB['MCV'] = Test(['MCV', 'mean corpuscular volume'], 'Average volume of a RBC', MCVdesc, [('AVG', AVGCOLOR, (84, 96))], 'fL')
 
 MCHdesc = ''
-testDB['MCH'] = Test(['MCH'], )
+testDB['MCH'] = Test(['MCH', 'mean corpuscular hemoglobin'], 'Average mass of a hemoglobin per RBC', MCHdesc, [('AVG', AVGCOLOR, (28, 34))], 'pg')
 
 MCHCdesc = ''
-testDB['MCHC']
+testDB['MCHC'] = Test(['MCHC', 'mean corpuscular hemoglobin concentration'], 'concentration of hemoglobin in volume of RBCs', MCHCdesc, [('AVG', AVGCOLOR, (32, 36))], 'g/dL')
 
 RDWdesc = ''
-testDB['RDW']
+testDB['RDW'] = Test(['RDW', 'RDW-SD', 'red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('AVG', AVGCOLOR, (39, 46))], 'fL')
