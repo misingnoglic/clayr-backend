@@ -38,6 +38,23 @@
 	"name": "Glucose",
 	"properties": {
 		"brief-description": "Blood Sugar",
-		"description": ""
+		"description": "Blood Sugar after fasting",
+		"low": "0-69",
+		"avg": "70-99",
+		"med": "100-120",
+		"high": "121+",
+		"units": "mg/dL"
+	}
+}
+{
+	"name": "Hemoglobin A1C",
+	"properties": {
+		"brief-description": "Glycated Hemoglobin",
+		"description": "lol",
+		"low": "0-4.2",
+		"avg": "4.2-5.9",
+		"med": "5.9-7.0",
+		"high": "7.0+",
+		"units": "%"
 	}
 }
