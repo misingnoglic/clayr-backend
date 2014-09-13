@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.files import File
 from django.core.files.images import ImageFile
 from django.shortcuts import render_to_response
@@ -39,8 +39,9 @@ def upload_file(request):
             #return HttpResponse("THanks!")
             #Create a list of Tests and generate them
             #Call a function to find the values of those tests, if found add the file to the list
-            return HttpResponseRedirect('/results')
-            #return HttpResponse(content, content_type='text/plain')
+            #return HttpResponseRedirect('/results')
+            f = open("media/uploaded/output.txt")
+            return HttpResponse(f, content_type='text/plain')
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})

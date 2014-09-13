@@ -42,6 +42,8 @@ class AbbyyOnlineSdk:
 
 	def ProcessImage( self, filePath, settings ):
 		urlParams = urllib.urlencode({
+            "textType" : "typewriter,ocrA",
+            "imageSource" : "photo",
 			"language" : settings.Language,
 			"exportFormat" : settings.OutputFormat
 			})
