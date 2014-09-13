@@ -77,7 +77,8 @@ def parse_file(alias_found, tests,unique_id):
         ranges = {}
         for t in test_data.ranges:
             ranges[t[0]]={'min':t[2][0], 'max':t[2][1], 'hex':t[1]}
-        dictionary = {'value':value, 'brief_desc':test_data.brief_desc, 'ranges':ranges, 'unit':test_data.unit}
+        dictionary = {'value':value, 'brief_desc':test_data.brief_desc, 'desc':test_data.desc,
+                      'ranges':ranges, 'unit':test_data.unit}
         results[test]=dictionary
     results['id']= unique_id
     json_file = json.dumps(results)
