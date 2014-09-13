@@ -38,8 +38,8 @@ def upload_file(request):
             #Call a function to find the values of those tests, if found add the file to the list
             #return HttpResponseRedirect('/results')
             f = open("media/uploaded/output.txt")
-
-            return HttpResponse(parse_file(f,['wbc','rbc']), content_type='application/json')
+            loaded_json = parse_file(f,['wbc','rbc'])
+            return HttpResponse(loaded_json, content_type='application/json')
     else:
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form})
@@ -71,7 +71,11 @@ def parse_file(alias_found, tests):
                 pass
 
             if alias_found: break
-        results[test]=value
+        ranges = {}
+        for t in test_data.ranges:
+            ranges[t[0]]={'min':t[2][0], 'max':t[2][1], 'hex':t[1]}
+        dictionary = {'value':value, 'brief_desc':test_data.brief_desc, 'ranges':ranges, 'unit':test_data.unit}
+        results[test]=dictionary
     return json.dumps(results)
 
 
