@@ -19,22 +19,22 @@ def testDatabaseGenerator():
     WBCdesc = 'When a person has a bacterial infection, the number of white cells rises very quickly. ' \
               'The number of white blood cells is sometimes used to find an infection or to see how the ' \
               'body is dealing with cancer treatment.'
-    testDB['wbc'] = Test(['WBC', 'leukocyte'], 'White Blood Cell count', WBCdesc,[('LOW', BADCOLOR, (2.0, 4.5))], [('AVG', AVGCOLOR, (4.5, 11.0))],[('HIGH', BADCOLOR, (11.1, 30.0))],'10^3 cells/uL')
+    testDB['wbc'] = Test(['WBC', 'leukocyte'], 'White Blood Cell count', WBCdesc,[('LOW', BADCOLOR, (2.0, 4.5))], ('AVG', AVGCOLOR, (4.5, 11.0)),('HIGH', BADCOLOR, (11.1, 30.0))],'10^3 cells/uL')
 
     RBCdesc = 'RBCs contain hemoglobin, which carries oxygen. How much oxygen your body tissues ' \
               'get depends on how many RBCs you have and how well they work.'
-    testDB['rbc'] = Test(['RBC', 'red blood cell count'], 'Red Blood Cell count', RBCdesc, [('LOW', BADCOLOR, (1.0, 4.1))], [('AVG', AVGCOLOR, (4.2, 5.4))],[('HIGH', BADCOLOR, (5.5, 10.0))], '10^6 cells/uL')
+    testDB['rbc'] = Test(['RBC', 'red blood cell count'], 'Red Blood Cell count', RBCdesc, [('LOW', BADCOLOR, (1.0, 4.1)), ('AVG', AVGCOLOR, (4.2, 5.4)), ('HIGH', BADCOLOR, (5.5, 10.0))], '10^6 cells/uL')
 
     Hemodesc = 'Hemoglobin is a protein in red blood cells that carries oxygen.'
-    testDB['hemo'] = Test(['Hemoglobin', 'Hemo', 'HGB','hb'], 'Oxygen capacity of RBCs', Hemodesc, [('LOW', BADCOLOR, (6.0, 13.5))], [('AVG', AVGCOLOR, (13.6, 17.5))], [('HIGH', BADCOLOR, (17.6, 20.0))], 'g/dL')
+    testDB['hemo'] = Test(['Hemoglobin', 'Hemo', 'HGB','hb'], 'Oxygen capacity of RBCs', Hemodesc, [('LOW', BADCOLOR, (6.0, 13.5)), ('AVG', AVGCOLOR, (13.6, 17.5)), ('HIGH', BADCOLOR, (17.6, 20.0))], 'g/dL')
 
     Hemocritdesc = 'Hematocrit is a blood test that measures the percentage of the volume of whole ' \
                    'blood that is made up of red blood cells. This measurement depends on the number ' \
                    'of red blood cells and the size of red blood cells.'
-    testDB['hematocrit'] = Test(['Hematocrit', 'HCT', 'PCV'], 'pct space RBCs take up', Hemocritdesc, [('LOW', BADCOLOR, (18.0, 40.0))], [('AVG', AVGCOLOR, (40.1, 54.0))], [('HIGH', BADCOLOR, (54.1, 60.0))], '%')
+    testDB['hematocrit'] = Test(['Hematocrit', 'HCT', 'PCV'], 'pct space RBCs take up', Hemocritdesc, [('LOW', BADCOLOR, (18.0, 40.0)), ('AVG', AVGCOLOR, (40.1, 54.0)), ('HIGH', BADCOLOR, (54.1, 60.0))], '%')
 
     MCVdesc = 'Average red blood cell size'
-    testDB['mcv'] = Test(['MCV', 'mean corpuscular volume'], 'Average volume of a RBC', MCVdesc, [('AVG', AVGCOLOR, (84, 96))], 'fL')
+    testDB['mcv'] = Test(['MCV', 'mean corpuscular volume'], 'Average volume of a RBC', MCVdesc, [('LOW', BADCOLOR, (60.0, 80.0)), ('AVG', AVGCOLOR, (80.1, 96.0)), ('HIGH', BADCOLOR, (96.1, 120.0))], 'fL')
 
     MCHdesc = 'Hemoglobin amount per red blood cell'
     testDB['mch'] = Test(['MCH', 'mean corpuscular hemoglobin'], 'Average mass of a hemoglobin per RBC', MCHdesc, [('AVG', AVGCOLOR, (28, 34))], 'pg')
