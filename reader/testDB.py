@@ -44,7 +44,8 @@ def testDatabaseGenerator():
     MCHCdesc = 'The amount of hemoglobin relative to the size of the cell (hemoglobin concentration) per red blood cell'
     testDB['mchc'] = Test(['MCHC', 'mean corpuscular hemoglobin concentration'], 'concentration of hemoglobin in volume of RBCs', MCHCdesc, [('LOW', BADCOLOR, (25.0, 30.9)), ('AVG', AVGCOLOR, (31.0, 36.0)), ('HIGH', BADCOLOR, (36.1, 41.0))], 'g/dL')
 
-    RDWdesc = 'Red cell distribution width is a measure of the variation in the size of red blood cells.'
+    RDWdesc = 'Red cell distribution width is a measure of the variation in the size of red blood cells.' \
+              'An increased variation in size of red blood cells is a hallmark of iron deficiency anemia.'
     testDB['rdw'] = Test(['RDW', 'RDW-SD', 'RDW-CV','red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('LOW', BADCOLOR, (7.0, 11.4)), ('AVG', AVGCOLOR, (11.5, 14.5)), ('HIGH', BADCOLOR, (14.6, 17.0))], 'fL')
 
     return testDB
