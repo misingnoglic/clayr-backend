@@ -19,7 +19,7 @@ def testDatabaseGenerator():
     WBCdesc = 'When a person has a bacterial infection, the number of white cells rises very quickly. ' \
               'The number of white blood cells is sometimes used to find an infection or to see how the ' \
               'body is dealing with cancer treatment.'
-    testDB['wbc'] = Test(['WBC', 'leukocyte'], 'White Blood Cell count', WBCdesc,[('LOW', BADCOLOR, (2.0, 4.5))], ('AVG', AVGCOLOR, (4.5, 11.0)),('HIGH', BADCOLOR, (11.1, 30.0))],'10^3 cells/uL')
+    testDB['wbc'] = Test(['WBC', 'leukocyte'], 'White Blood Cell count', WBCdesc,[('LOW', BADCOLOR, (2.0, 4.5)), ('AVG', AVGCOLOR, (4.5, 11.0)),('HIGH', BADCOLOR, (11.1, 30.0))],'10^3 cells/uL')
 
     RBCdesc = 'RBCs contain hemoglobin, which carries oxygen. How much oxygen your body tissues ' \
               'get depends on how many RBCs you have and how well they work.'
