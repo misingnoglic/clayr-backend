@@ -51,8 +51,9 @@ def upload_file(request):
             return HttpResponse(loaded_json, content_type='application/json')
     else:
         s = str(settings.BASE_DIR)
+        t = "hi"
         form = UploadFileForm()
-    return render(request,'upload.html', {'form': form, 'path':s})
+    return render(request,'upload.html', {'form': form, 'path':s, 't':t})
 
 def parse_file(alias_found, tests,unique_id):
     testDB = testDatabaseGenerator()
