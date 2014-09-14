@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-print('BASE_DIR: ' + BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -86,7 +85,7 @@ SITE_ROOT = PROJECT_ROOT
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+MEDIA_ROOT = 'media' #os.path.join(SITE_ROOT, 'media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
