@@ -18,6 +18,7 @@ import time
 #from somewhere import handle_uploaded_file
 def save_file(file, unique_id, path=os.path.join('uploaded')):
     new_path = os.path.join(settings.MEDIA_ROOT,path)
+    print('Media root: ' + settings.MEDIA_ROOT)
     if not os.path.exists(new_path):
         os.mkdir(new_path)
     new_path = os.path.join(new_path,unique_id)
