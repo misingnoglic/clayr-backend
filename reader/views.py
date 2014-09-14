@@ -2,7 +2,7 @@ import os
 import sys
 
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.http import HttpRequest
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -56,8 +56,8 @@ def decode_file(request):
            content_type="image/jpeg",
            size=sys.getsizeof(file),
            charset=None)
-    request.FILES[u'file'] = image
-    HttpRequest.POST(request)
+        request.FILES[u'file'] = image
+    HttpResponseRedirect('/')
 
 def save_file(file, unique_id, product,path=os.path.join('uploaded')):
     new_path = os.path.join(settings.MEDIA_ROOT,path)
