@@ -51,7 +51,7 @@ def upload_file(request):
             return HttpResponse(loaded_json, content_type='application/json')
     else:
         s = str(settings.BASE_DIR)
-        t = "hi"
+        t = str(settings.MEDIA_ROOT)
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form, 'path':s, 't':t})
 
