@@ -1,6 +1,6 @@
 import os
 
-PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
+
 
 from django.shortcuts import render, HttpResponse
 from django.conf import settings
@@ -8,16 +8,39 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import UploadFileForm
 from ABBYY import process
-from reader.testDB import testDatabaseGenerator
+from reader.testDB import testDatabaseGenerator, testValueDictionary
 import json
 import calendar
 import time
+from base64 import decodestring
 
 
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
 
-# Imaginary function to handle an uploaded file.
-#from somewhere import handle_uploaded_file
-def save_file(file, unique_id, path=os.path.join('uploaded')):
+@csrf_exempt #To allow android uploading
+def upload_file(request, product=None):
+    """
+    Main view, it takes an image upload and gives the JSON Data
+    """
+    if request.method == 'POST': #If the image was uploaded
+        test_values = testValueDictionary()
+        unique_id = str(calendar.timegm(time.gmtime())-10**6) #Creates unique ID
+        form = UploadFileForm(request.POST, request.FILES) #Gets files from the form
+        if form.is_valid() and form.is_multipart():
+
+            save_file(request.FILES['file'],unique_id,product) #Saves the image to allow for image processing
+
+            f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt')) #opens the OCR
+            loaded_json = parse_file(f,test_values['cbc'],unique_id)
+            return HttpResponse(loaded_json, content_type='application/json')
+    else:
+        s = str(settings.BASE_DIR)
+        t = str(settings.MEDIA_ROOT)
+        form = UploadFileForm()
+    return render(request,'upload.html', {'form': form, 'path':s, 't':t})
+
+
+def save_file(file, unique_id, product,path=os.path.join('uploaded')):
     new_path = os.path.join(settings.MEDIA_ROOT,path)
     print('Media root: ' + settings.MEDIA_ROOT)
     if not os.path.exists(new_path):
@@ -25,11 +48,16 @@ def save_file(file, unique_id, path=os.path.join('uploaded')):
     new_path = os.path.join(new_path,unique_id)
     os.mkdir(new_path)
     filename = 'image'
+    if not (product is None): filename = filename+"64"
     filepath = os.path.join(str(new_path), str(filename))
     fd = open(filepath, 'wb')
     for chunk in file.chunks():
         fd.write(chunk)
     fd.close()
+    if not (product is None):
+        with open(filepath[:-2],"wb") as f:
+            f.write(decodestring(filepath))
+        filepath = filepath[:-2]
     handle_file(filepath)
 
 def handle_file(filename):
@@ -39,23 +67,6 @@ def handle_file(filename):
 def results(request):
     return render(request,'results.html')
 
-@csrf_exempt
-def upload_file(request):
-    if request.method == 'POST':
-        unique_id = str(calendar.timegm(time.gmtime())-10**6)
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid() and form.is_multipart():
-
-            save_file(request.FILES['file'],unique_id)
-
-            f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt'))
-            loaded_json = parse_file(f,['wbc','rbc'],unique_id)
-            return HttpResponse(loaded_json, content_type='application/json')
-    else:
-        s = str(settings.BASE_DIR)
-        t = str(settings.MEDIA_ROOT)
-        form = UploadFileForm()
-    return render(request,'upload.html', {'form': form, 'path':s, 't':t})
 
 def parse_file(alias_found, tests,unique_id):
     testDB = testDatabaseGenerator()

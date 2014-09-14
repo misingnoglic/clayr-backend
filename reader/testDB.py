@@ -35,6 +35,11 @@ def testDatabaseGenerator():
     testDB['mchc'] = Test(['MCHC', 'mean corpuscular hemoglobin concentration'], 'concentration of hemoglobin in volume of RBCs', MCHCdesc, [('AVG', AVGCOLOR, (32, 36))], 'g/dL')
 
     RDWdesc = ''
-    testDB['rdw'] = Test(['RDW', 'RDW-SD', 'red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('AVG', AVGCOLOR, (39, 46))], 'fL')
+    testDB['rdw'] = Test(['RDW', 'RDW-SD', 'RDW-CV','red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('AVG', AVGCOLOR, (39, 46))], 'fL')
 
     return testDB
+
+def testValueDictionary():
+    d = {}
+    d['cbc'] = ['wbc','rbc', 'hemo', 'hematocrit', 'mcv', 'mch', 'mchc', 'rdw']
+    return d
