@@ -1,0 +1,49 @@
+﻿:	CBC TREAT
+Comments: Specimen obtained via line draw.
+Specimen obtained via line draw.
+Test
+Result
+HEMATOLOGY
+AUTOHEMATOLOGY - DIFFERENTIA!
+>	WBC			2.4
+>	RBC			2.63
+>	HGB			8.6
+>	HCT			24.2
+>	MCV			92.2
+>	MCH			32.6
+>	MCHC			35.3
+>	RDW-CV			19.5
+>	PLT			35
+>	MPV			6.5
+>	NEUT	%	(AUTO)	72
+>	LYMPH	%	(AUTO)	16
+>	MONO	%	(AUTO)	10
+>	EOS	%	(AUTO)	1
+>	BASO	%	(AUTO)	1
+>	NEUT	AB	(AUTO)	1.72
+>	LYMPH	AB	(AUTO)	0.38
+>	MONO	AB	(AUTO)	0.24
+>	EOS	AB	(AUTO)	0.03
+>	BASO	AB	(AUTO)	0.03
+Flag Reference
+MORPHOLOGY
+L | 4.5-11.0 K/UL	|	(@MVR)
+L	I	3.5-5.5 M/UL	j	(@MVR)
+L	|	12.0-15.0 G/DL	|	(@MVR)
+L	|	36.0-48.0 %	|	(@MVR)
+j	79.0-101.0 FL	|	(@MVR)
+j	25.0-35.0	PG	|	(@MVR)
+j	31.0-37.0	G/DL	j	(@MVR)
+H	j	11.0-16.0	%	j	(@MVR)
+L	j	140-440 K/UL	j	(@MVR)
+L	7.0-10.0 FI	j	(@MVR)
+|	40-76 %	|	(@MVR)
+L	|	24-44 %	j	(@MVR)
+|	1.0-10.0 %	j	(@MVR)
+I	0.0-3.0	%	j	(@MVR)
+|	0-1 %	j	(@MVR)
+L	|	1.9-8.8	K/UL	j	(@MVR)
+L	j	1.0-4.8	K/UL	j	(@MVR),
+j	0.1-0.8	K/UL	j	(@MVR)
+j	0.0-0.5	K/UL	|	(@MVR)
+| 0.0-0.1 K/UL	(@MVR)

@@ -84,4 +84,4 @@ docs/_build/
 target/
 
 secret.py
-media/uploaded
+#media/uploaded
