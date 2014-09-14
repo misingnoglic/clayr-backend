@@ -50,8 +50,9 @@ def upload_file(request):
             loaded_json = parse_file(f,['wbc','rbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
     else:
+        s = str(settings.BASE_DIR)
         form = UploadFileForm()
-    return render(request,'upload.html', {'form': form})
+    return render(request,'upload.html', {'form': form, 'path':s})
 
 def parse_file(alias_found, tests,unique_id):
     testDB = testDatabaseGenerator()
