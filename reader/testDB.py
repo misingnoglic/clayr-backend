@@ -25,7 +25,8 @@ def testDatabaseGenerator():
               'get depends on how many RBCs you have and how well they work.'
     testDB['rbc'] = Test(['RBC', 'red blood cell count'], 'Red Blood Cell count', RBCdesc, [('LOW', BADCOLOR, (1.0, 4.1)), ('AVG', AVGCOLOR, (4.2, 5.4)), ('HIGH', BADCOLOR, (5.5, 10.0))], '10^6 cells/uL')
 
-    Hemodesc = 'Hemoglobin is a protein in red blood cells that carries oxygen.'
+    Hemodesc = 'Hemoglobin is a protein in red blood cells that carries oxygen. The concentration of hemoglobin' \
+               'is one measure of how effectively your body can transport oxygen from your lungs to your tissues. '
     testDB['hemo'] = Test(['Hemoglobin', 'Hemo', 'HGB','hb'], 'Oxygen capacity of RBCs', Hemodesc, [('LOW', BADCOLOR, (6.0, 13.5)), ('AVG', AVGCOLOR, (13.6, 17.5)), ('HIGH', BADCOLOR, (17.6, 20.0))], 'g/dL')
 
     Hemocritdesc = 'Hematocrit is a blood test that measures the percentage of the volume of whole ' \
