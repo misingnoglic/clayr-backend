@@ -120,10 +120,25 @@ def parse_file(alias_found, tests,unique_id):
                       'ranges':ranges, 'unit':test_data.unit}
         results[test]=dictionary
     results['id']= unique_id
+
+    ## tests ##
+    if results['mcv']['value']>results['mcv']['ranges']['AVG']['max']:
+        results['mcv']['desc'] = results['mcv']['desc']+ " - High MCV correlates with Vitamin B12 Deficiency"
+
+    if results['mcv']['value']<results['mcv']['ranges']['AVG']['min'] and not results['mcv']['value'] is None:
+        if results['rdw']['value']>results['rdw']['ranges']['AVG']['max']:
+            results['mcv']['desc'] = results['mcv']['desc']+ " - Low MCV and high RDW correlates with Iron Deficiency"
+
+    if results['hemo']['value']<results['hemo']['ranges']['AVG']['min']-10:
+        if results['mcv']['value']>(results['mcv']['ranges']['AVG']['max']+results['mcv']['ranges']['AVG']['min'])/2.0:
+            results['hemo']['desc'] = ['hemo']['desc'] + " - Very low Hemoglobin and higher MCV correlates with pernicious anemia"
+        else:
+            results['hemo']['desc'] = ['hemo']['desc'] + " - Very low Hemoglobin and lower MCV correlates with microcitic anemia"
+
+
     json_file = json.dumps(results)
     with open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'json.txt'), 'w') as json_storage:
         json_storage.write(json_file)
     return json_file
 
-def tests(dict):
-    pass
+
