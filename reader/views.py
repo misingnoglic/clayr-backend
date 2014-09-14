@@ -123,17 +123,17 @@ def parse_file(alias_found, tests,unique_id):
 
     ## tests ##
     if results['mcv']['value']>results['mcv']['ranges']['AVG']['max']:
-        results['mcv']['desc'] = results['mcv']['desc']+ " - High MCV correlates with Vitamin B12 Deficiency"
+        results['mcv']['desc']+= " - High MCV correlates with Vitamin B12 Deficiency"
 
     if results['mcv']['value']<results['mcv']['ranges']['AVG']['min'] and not results['mcv']['value'] is None:
         if results['rdw']['value']>results['rdw']['ranges']['AVG']['max']:
-            results['mcv']['desc'] = results['mcv']['desc']+ " - Low MCV and high RDW correlates with Iron Deficiency"
+            results['mcv']['desc'] += " - Low MCV and high RDW correlates with Iron Deficiency"
 
-    if results['hemo']['value']<results['hemo']['ranges']['AVG']['min']-10:
+    if results['hemo']['value']<results['hemo']['ranges']['AVG']['min']-4:
         if results['mcv']['value']>(results['mcv']['ranges']['AVG']['max']+results['mcv']['ranges']['AVG']['min'])/2.0:
-            results['hemo']['desc'] = ['hemo']['desc'] + " - Very low Hemoglobin and higher MCV correlates with pernicious anemia"
+            results['hemo']['desc'] += " - Very low Hemoglobin and higher MCV correlates with pernicious anemia"
         else:
-            results['hemo']['desc'] = ['hemo']['desc'] + " - Very low Hemoglobin and lower MCV correlates with microcitic anemia"
+            results['hemo']['desc'] += " - Very low Hemoglobin and lower MCV correlates with microcitic anemia"
 
 
     json_file = json.dumps(results)
