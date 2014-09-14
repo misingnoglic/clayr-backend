@@ -11,7 +11,10 @@ def testDatabaseGenerator():
         self.ranges = ranges
         self.unit = unit
 
-    AVGCOLOR = '379F7A'
+    AVGCOLOR = '00BCD1'
+    GOODCOLOR = '379F7A'
+    MEHCOLOR = 'F2B657'
+    BADCOLOR = 'CE3D48'
 
     WBCdesc = 'When a person has a bacterial infection, the number of white cells rises very quickly. ' \
               'The number of white blood cells is sometimes used to find an infection or to see how the ' \
