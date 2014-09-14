@@ -1,5 +1,7 @@
 import os
 
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
+
 from django.shortcuts import render, HttpResponse
 from django.conf import settings
 
@@ -10,20 +12,23 @@ import json
 import calendar
 import time
 
+
+
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
-def save_file(file, unique_id, path='uploaded/'):
-    new_path = settings.MEDIA_ROOT+"/"+path
+def save_file(file, unique_id, path=os.path.join('uploaded')):
+    new_path = os.path.join(settings.MEDIA_ROOT,path)
     if not os.path.exists(new_path):
         os.mkdir(new_path)
-    new_path = new_path+unique_id+"/"
+    new_path = os.path.join(new_path,unique_id)
     os.mkdir(new_path)
     filename = 'image'
-    fd = open(str(new_path) + str(filename), 'wb')
+    filepath = os.path.join(str(new_path), str(filename))
+    fd = open(filepath, 'wb')
     for chunk in file.chunks():
         fd.write(chunk)
     fd.close()
-    handle_file(str(new_path) + str(filename))
+    handle_file(filepath)
 
 def handle_file(filename):
     path = os.path.split(filename)[0]
@@ -40,7 +45,7 @@ def upload_file(request):
 
             save_file(request.FILES['file'],unique_id)
 
-            f = open("media/uploaded/"+unique_id+"/output.txt")
+            f = open(os.path.join(PROJECT_PATH,'media','uploaded',unique_id,'output.txt'))
             loaded_json = parse_file(f,['wbc','rbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
     else:
@@ -82,8 +87,6 @@ def parse_file(alias_found, tests,unique_id):
         results[test]=dictionary
     results['id']= unique_id
     json_file = json.dumps(results)
-    with open(settings.MEDIA_ROOT+'/'+'uploaded/'+unique_id+'/'+'json.txt', 'w') as json_storage:
+    with open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'json.txt'), 'w') as json_storage:
         json_storage.write(json_file)
     return json_file
-
-
