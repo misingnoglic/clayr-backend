@@ -29,23 +29,18 @@ def upload_file(request, product=None):
     """
     Main view, it takes an image upload and gives the JSON Data
     """
-
     if request.method == 'POST': #If the image was uploaded
         test_values = testValueDictionary()
         unique_id = str(calendar.timegm(time.gmtime())-10**6) #Creates unique ID
         form = UploadFileForm(request.POST, request.FILES) #Gets files from the form
         if form.is_valid() and form.is_multipart():
-
             save_file(request.FILES['file'],unique_id,product) #Saves the image to allow for image processing
-
             f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt')) #opens the OCR
             loaded_json = parse_file(f,test_values['cbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
     else:
-        s = str(settings.BASE_DIR)
-        t = str(settings.MEDIA_ROOT)
         form = UploadFileForm()
-    return render(request,'upload.html', {'form': form, 'path':s, 't':t})
+        return render(request,'upload.html', {'form': form})
 
 def decode_file(request):
     if request.POST.get('file') and request.POST.get('name'):
@@ -124,3 +119,6 @@ def parse_file(alias_found, tests,unique_id):
     with open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'json.txt'), 'w') as json_storage:
         json_storage.write(json_file)
     return json_file
+
+def tests(dict):
+    pass
