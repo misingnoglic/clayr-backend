@@ -45,7 +45,7 @@ def upload_file(request):
 
             save_file(request.FILES['file'],unique_id)
 
-            f = open(os.path.join(PROJECT_PATH,'media','uploaded',unique_id,'output.txt'))
+            f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt'))
             loaded_json = parse_file(f,['wbc','rbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
     else:
