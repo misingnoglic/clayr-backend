@@ -4,6 +4,7 @@ PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
 
 from django.shortcuts import render, HttpResponse
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import UploadFileForm
 from ABBYY import process
@@ -38,6 +39,7 @@ def handle_file(filename):
 def results(request):
     return render(request,'results.html')
 
+@csrf_exempt
 def upload_file(request):
     if request.method == 'POST':
         unique_id = str(calendar.timegm(time.gmtime())-10**6)
