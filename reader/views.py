@@ -38,6 +38,11 @@ def upload_file(request, product=None):
             f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt')) #opens the OCR
             loaded_json = parse_file(f,test_values['cbc'],unique_id)
             return HttpResponse(loaded_json, content_type='application/json')
+        else:
+            save_file(request.FILES['userfile'],unique_id,product) #Saves the image to allow for image processing
+            f = open(os.path.join(settings.MEDIA_ROOT,'uploaded',unique_id,'output.txt')) #opens the OCR
+            loaded_json = parse_file(f,test_values['cbc'],unique_id)
+            return HttpResponse(loaded_json, content_type='application/json')
     else:
         form = UploadFileForm()
         return render(request,'upload.html', {'form': form})
