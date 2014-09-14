@@ -37,13 +37,13 @@ def testDatabaseGenerator():
     testDB['mcv'] = Test(['MCV', 'mean corpuscular volume'], 'Average volume of a RBC', MCVdesc, [('LOW', BADCOLOR, (60.0, 80.0)), ('AVG', AVGCOLOR, (80.1, 96.0)), ('HIGH', BADCOLOR, (96.1, 120.0))], 'fL')
 
     MCHdesc = 'Hemoglobin amount per red blood cell'
-    testDB['mch'] = Test(['MCH', 'mean corpuscular hemoglobin'], 'Average mass of a hemoglobin per RBC', MCHdesc, [('AVG', AVGCOLOR, (28, 34))], 'pg')
+    testDB['mch'] = Test(['MCH', 'mean corpuscular hemoglobin'], 'Average mass of a hemoglobin per RBC', MCHdesc, [('LOW', BADCOLOR, (15.4, 25.3)), ('AVG', AVGCOLOR, (25.4, 34.6)), ('HIGH', BADCOLOR, (34.7, 45.6))], 'pg')
 
     MCHCdesc = 'The amount of hemoglobin relative to the size of the cell (hemoglobin concentration) per red blood cell'
-    testDB['mchc'] = Test(['MCHC', 'mean corpuscular hemoglobin concentration'], 'concentration of hemoglobin in volume of RBCs', MCHCdesc, [('AVG', AVGCOLOR, (32, 36))], 'g/dL')
+    testDB['mchc'] = Test(['MCHC', 'mean corpuscular hemoglobin concentration'], 'concentration of hemoglobin in volume of RBCs', MCHCdesc, [('LOW', BADCOLOR, (25.0, 30.9)), ('AVG', AVGCOLOR, (31.0, 36.0)), ('HIGH', BADCOLOR, (36.1, 41.0))], 'g/dL')
 
     RDWdesc = 'Red cell distribution width'
-    testDB['rdw'] = Test(['RDW', 'RDW-SD', 'RDW-CV','red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('AVG', AVGCOLOR, (39, 46))], 'fL')
+    testDB['rdw'] = Test(['RDW', 'RDW-SD', 'RDW-CV','red blood cell distribution width'], 'measures variation in RBC size', RDWdesc, [('LOW', BADCOLOR, (7.0, 11.4)), ('AVG', AVGCOLOR, (11.5, 14.5)), ('HIGH', BADCOLOR, (14.6, 17.0))], 'fL')
 
     return testDB
 
