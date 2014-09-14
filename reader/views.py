@@ -1,8 +1,9 @@
 import os
-
+import sys
 
 
 from django.shortcuts import render, HttpResponse
+from django.http import HttpRequest
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
@@ -14,6 +15,12 @@ import calendar
 import time
 from base64 import decodestring
 
+import base64
+import cStringIO
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
 
@@ -22,6 +29,7 @@ def upload_file(request, product=None):
     """
     Main view, it takes an image upload and gives the JSON Data
     """
+
     if request.method == 'POST': #If the image was uploaded
         test_values = testValueDictionary()
         unique_id = str(calendar.timegm(time.gmtime())-10**6) #Creates unique ID
@@ -39,6 +47,17 @@ def upload_file(request, product=None):
         form = UploadFileForm()
     return render(request,'upload.html', {'form': form, 'path':s, 't':t})
 
+def decode_file(request):
+    if request.POST.get('file') and request.POST.get('name'):
+        file = cStringIO.StringIO(base64.b64decode(request.POST['file']))
+        image = InMemoryUploadedFile(file,
+           field_name='file',
+           name=request.POST['name'],
+           content_type="image/jpeg",
+           size=sys.getsizeof(file),
+           charset=None)
+    request.FILES[u'file'] = image
+    HttpRequest.POST(request)
 
 def save_file(file, unique_id, product,path=os.path.join('uploaded')):
     new_path = os.path.join(settings.MEDIA_ROOT,path)
@@ -54,10 +73,7 @@ def save_file(file, unique_id, product,path=os.path.join('uploaded')):
     for chunk in file.chunks():
         fd.write(chunk)
     fd.close()
-    if not (product is None):
-        with open(filepath[:-2],"wb") as f:
-            f.write(decodestring(filepath))
-        filepath = filepath[:-2]
+
     handle_file(filepath)
 
 def handle_file(filename):
